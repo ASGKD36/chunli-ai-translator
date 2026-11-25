@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="km">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Chunli AI Translator</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1220;--card:#131f33;--line:#263750;--gold:#f3c969;--muted:#aab8ca}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(160deg,#101d32,#080e19 70%);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f5f7fb;min-height:100vh}
+main{max-width:720px;margin:auto;padding:26px 16px 50px}.brand{text-align:center;margin:14px 0 24px}.logo{width:64px;height:64px;border:2px solid var(--gold);border-radius:20px;display:grid;place-items:center;margin:auto;color:var(--gold);font-weight:900;font-size:25px;box-shadow:0 0 24px #f3c96933}.brand h1{font-size:25px;margin:13px 0 5px;letter-spacing:.4px}.brand p{margin:0;color:var(--muted);font-size:14px}
+.card{background:#131f33eF;border:1px solid var(--line);border-radius:20px;padding:19px;margin:14px 0;box-shadow:0 12px 30px #0003}.title{font-size:17px;font-weight:700;margin:0 0 13px}.flow{display:flex;align-items:center;justify-content:center;gap:14px;padding:14px;border-radius:14px;background:#0d1728;color:var(--gold);font-weight:700}.flow span{color:#fff}
+.upload{display:block;border:1.5px dashed #536985;border-radius:16px;padding:26px 15px;text-align:center;background:#0d1728;cursor:pointer}.upload strong{display:block;margin:8px 0 5px}.upload small,.hint{color:var(--muted);font-size:13px}.upload input{display:none}.fileinfo{margin-top:12px;color:#d9e5f4;font-size:13px;word-break:break-word}.preview{width:100%;max-height:310px;margin-top:12px;border-radius:12px;background:#05080e;display:none}
+label.field{display:block;font-size:14px;margin:13px 0 7px;color:#dce5f0}select{width:100%;padding:13px;border-radius:12px;background:#0d1728;border:1px solid var(--line);color:white;font-size:15px}
+.check{display:flex;gap:10px;align-items:flex-start;color:#dce5f0;font-size:14px;line-height:1.5;margin-top:15px}.check input{margin-top:4px;accent-color:var(--gold)}
+button{width:100%;border:0;border-radius:13px;padding:15px 18px;background:linear-gradient(90deg,#e9bd59,#f8dc91);color:#172033;font-size:16px;font-weight:800;margin-top:17px;cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}
+.status{display:none;margin-top:14px;padding:13px;border-radius:12px;background:#342b18;border:1px solid #806b39;color:#ffe6a8;font-size:13px;line-height:1.6}
+.note{font-size:12px;color:var(--muted);line-height:1.6;text-align:center;margin:18px 8px}.badge{display:inline-block;color:#ffe5a0;border:1px solid #806b39;border-radius:30px;padding:5px 10px;font-size:12px;margin-top:12px}
+</style>
+</head>
+<body>
+<main>
+  <header class="brand">
+    <div class="logo">C</div>
+    <h1>CHUNLI AI TRANSLATOR</h1>
+    <p>បកប្រែសំឡេងរឿងចិនទៅជាសំឡេងខ្មែរ</p>
+    <div class="badge">TRIAL VERSION · សាកល្បង</div>
+  </header>
+
+  <section class="card">
+    <h2 class="title">១. ជ្រើសរើសវីដេអូ</h2>
+    <label class="upload" for="video">
+      <div style="font-size:30px">📤</div>
+      <strong>ចុចទីនេះដើម្បី Upload Video</strong>
+      <small>ជ្រើសរើសវីដេអូពី Photos ឬ Files ក្នុង iPhone</small>
+      <input id="video" type="file" accept="video/*">
+    </label>
+    <div id="fileinfo" class="fileinfo">មិនទាន់មានវីដេអូទេ</div>
+    <video id="preview" class="preview" controls playsinline></video>
+    <p class="hint">កំណែសាកល្បង៖ វីដេអូអតិបរមា ៣ នាទី។</p>
+  </section>
+
+  <section class="card">
+    <h2 class="title">២. កំណត់ភាសា និងសំឡេង</h2>
+    <div class="flow">🇨🇳 中文 <span>→</span> 🇰🇭 ខ្មែរ</div>
+    <label class="field" for="voice">របៀបសំឡេង</label>
+    <select id="voice">
+      <option value="characters">សំឡេង AI ប្រុស/ស្រី តាមតួអង្គ</option>
+      <option value="narrator">សំឡេងអ្នកនិទានតែមួយ</option>
+    </select>
+    <label class="field" for="style">រចនាប័ទ្មសំឡេង</label>
+    <select id="style">
+      <option>សំឡេងធម្មជាតិ និងច្បាស់</option>
+      <option>សំឡេងស្ងប់ស្ងាត់</option>
+      <option>សំឡេងមានអារម្មណ៍តាមសាច់រឿង</option>
+    </select>
+    <label class="check"><input type="checkbox" id="music" checked> <span>រក្សាតន្ត្រី និងសំឡេងផ្ទៃខាងក្រោយតាមដែលអាចធ្វើបាន</span></label>
+    <button id="start" disabled>🎙️ ចាប់ផ្ដើមបកប្រែ</button>
+    <div id="status" class="status"></div>
+  </section>
+
+  <p class="note">នេះជាគំរូវេបសាយដំបូង (Frontend Prototype)។ ការបកប្រែសំឡេងពិត និងការបង្កើតវីដេអូខ្មែរត្រូវការភ្ជាប់ Backend និងសេវា AI API មុនពេលដំណើរការ។ ឯកសារវីដេអូដែលអ្នកជ្រើសរើសនៅក្នុងគំរូនេះមិនត្រូវបានផ្ញើទៅម៉ាស៊ីនមេទេ។</p>
+</main>
+<script>
+const input=document.getElementById('video'), info=document.getElementById('fileinfo'), preview=document.getElementById('preview'), start=document.getElementById('start'), status=document.getElementById('status');
+let objectUrl=null, valid=false;
+input.addEventListener('change',()=>{
+  const f=input.files[0]; valid=false; start.disabled=true; status.style.display='none';
+  if(objectUrl) URL.revokeObjectURL(objectUrl);
+  if(!f){info.textContent='មិនទាន់មានវីដេអូទេ';preview.style.display='none';return;}
+  if(!f.type.startsWith('video/')){info.textContent='សូមជ្រើសរើសឯកសារវីដេអូ។';return;}
+  objectUrl=URL.createObjectURL(f);preview.src=objectUrl;preview.style.display='block';
+  info.textContent='ឯកសារ៖ '+f.name+' · '+(f.size/1024/1024).toFixed(1)+' MB';
+  preview.onloadedmetadata=()=>{
+    if(preview.duration>180){info.textContent+=' · វីដេអូវែងជាង ៣ នាទី។ សូមជ្រើសរើសវីដេអូខ្លីជាងនេះ។';return;}
+    valid=true;start.disabled=false;
+    info.textContent+=' · រយៈពេល '+Math.floor(preview.duration/60)+':'+String(Math.floor(preview.duration%60)).padStart(2,'0');
+  };
+});
+start.addEventListener('click',()=>{
+  if(!valid)return;
+  status.style.display='block';
+  status.textContent='គំរូនេះទទួលបានវីដេអូរបស់អ្នកហើយ។ មុខងារបកប្រែពិតមិនទាន់បានភ្ជាប់ទេ។ ដើម្បីដំណើរការ ត្រូវបង្កើត Backend សម្រាប់សម្គាល់សំឡេងចិន បកប្រែជាខ្មែរ បង្កើតសំឡេង AI និងបញ្ចូលសំឡេងទៅក្នុងវីដេអូ។';
+});
+</script>
+</body>
+</html>
